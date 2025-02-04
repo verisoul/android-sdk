@@ -6,13 +6,18 @@
 </picture>
 </p>
 
-# Native Sample Application
+# Android SDK
 
-<img src="resources/verisoul.gif" width="128"/>
+## Overview
+The purpose of this app is to demonstrate Verisoul's Android SDK integration.
 
-<h2>Quick Start</h2>
+_To run the app a Verisoul Project ID is required._ Schedule a call [here](https://meetings.hubspot.com/henry-legard) to get started.
 
-<h3>1. Add Repository</h3>
+<!-- <img src="resources/verisoul.gif" width="128"/> -->
+
+## Getting Started
+
+### 1. Add Repository
 
 Add these lines to your `settings.gradle` file.
 
@@ -25,11 +30,11 @@ dependencyResolutionManagement {
 }
 ```
 
-<h3>2. Add Dependency</h3>
+### 2. Add Dependency
 
 Add these lines to your `build.gradle` file.
 
-<h4>For Groovy DSL</h4>
+#### For Groovy DSL
 
 ```kotlin
 dependencies {
@@ -38,7 +43,7 @@ dependencies {
 }
 ```
 
-<h4>For Kotlin DSL</h4>
+#### For Kotlin DSL
 
 ```kotlin
 dependencies {
@@ -61,9 +66,9 @@ Under the `[libraries]` add:
 verisoul-android = { group = "ai.verisoul", name = "android", version.ref = "verisoul" }
 ```
 
-<h2>Usage</h2>
+## Usage
 
-<h3>1. Initialization</h3>
+### 1. Initialization
 
 Initialization should be called in overridden `onCreate()` function from `Application` class that should be defined in the `AndroidManifest.xml` file. For example:
 
@@ -77,7 +82,7 @@ class SampleApplication : Application() {
 
         Verisoul.init(
             this,
-            "<VERISOUL_ENV>",
+            VerisoulEnvironment.Prod, // or Sandbox
             "<VERISOUL_PROJECT_ID>"
         )
     }
@@ -95,11 +100,12 @@ class SampleApplication : Application() {
 </manifest>
 ```
 
-When this is called Verisoul library will be initialized, initial data together with **session ID** will be gathered and uploaded to Verisoul backend. Session ID represent unique identifier of users device in Versioul world.
+When this is called Verisoul library will be initialized, initial data together with **session ID** will be gathered and uploaded to Verisoul backend.
 
-<h3>2. Fetching Session ID</h3>
+### 2. Get Session ID
 
-Session ID should be successfully fetched nad persisted on Verisoul ecosystem during the initialization of the library. Other than that, Session ID should be persisted to clients backend system to easily track and find which user it belongs. Client's application that is using Verisoul library can obtain session Id by providing the callback as shown below (if some error occur, exception will be thrown with appropriate message):
+Once the minimum amount of data is gathered the session ID becomes available. 
+The session ID is needed in order to request a risk assessment from Verisoul's API. Note that session IDs are short lived and will expire after 24 hours. The application can obtain session ID by providing the callback as shown below:
 
 ```kotlin
 Verisoul.getSessionId(
@@ -115,9 +121,9 @@ Verisoul.getSessionId(
 )
 ```
 
-<h3>3. Provide Touch Events</h3>
+### 3. Provide Touch Events
 
-In order to gather touch events and compare them to device accelerometer sensor data, clients app should provide touch events to the Versioul library. Easiest way to achieve this is to create `BaseActivity`, to override `dispatchTouchEvent` function and pass the data to Verisoul like shown below.
+In order to gather touch events and compare them to device accelerometer sensor data, the app will need to provide touch events to Verisoul. The way to achieve this is to create `BaseActivity`, to override `dispatchTouchEvent` function and pass the data to Verisoul like shown below.
 
 ```kotlin
 open class BaseActivity : Activity() {
@@ -131,7 +137,7 @@ open class BaseActivity : Activity() {
 }
 ```
 
-In clients application, just use BaseActivity as an Activity base class.
+In the application, just use BaseActivity as an Activity base class.
 
 ```kotlin
 class MainActivity : BaseActivity() {
@@ -139,3 +145,6 @@ class MainActivity : BaseActivity() {
     // Other Activity code...
 }
 ```
+
+## Questions and Feedback
+Comprehensive documentation about Verisoul's Android SDK and API can be found at [docs.verisoul.ai](https://docs.verisoul.ai/). Additionally, reach out to Verisoul at [help@verisoul.ai](mailto:help@verisoul.ai) for any questions or feedback.
