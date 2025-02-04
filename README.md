@@ -8,10 +8,7 @@
 
 # Native Sample Application
 
-<p align="center">
-<picture>
-    <img src="resources/verisoul.gif" width="128"/>
-</p>
+<img src="resources/verisoul.gif" width="128"/>
 
 <h2>Quick Start</h2>
 
