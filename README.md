@@ -39,7 +39,7 @@ Add these lines to your `build.gradle` file.
 ```kotlin
 dependencies {
   ...
-  implementation "ai.verisoul:android:1.0.3"
+  implementation "ai.verisoul:android:0.3.0"
 }
 ```
 

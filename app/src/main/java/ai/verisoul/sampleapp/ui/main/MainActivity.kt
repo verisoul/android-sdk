@@ -2,7 +2,7 @@ package ai.verisoul.sampleapp.ui.main
 
 import ai.verisoul.sampleapp.ui.theme.VerisoulSampleAppTheme
 import ai.verisoul.sdk.Verisoul
-import ai.verisoul.sdk.webview.VerisoulSessionCallback
+import ai.verisoul.sdk.helpers.webview.VerisoulSessionCallback
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
