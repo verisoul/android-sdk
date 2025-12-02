@@ -8,16 +8,19 @@
 
 # Android SDK
 
-## Overview
-The purpose of this app is to demonstrate Verisoul's Android SDK integration.
+Verisoul provides an Android SDK that allows you to implement fraud prevention in your Android applications. This guide covers the installation, configuration, and usage of the Verisoul Android SDK.
 
-_To run the app a Verisoul Project ID is required._ Schedule a call [here](https://meetings.hubspot.com/henry-legard) to get started.
+_To run the SDK a Verisoul Project ID is required._ Schedule a call [here](https://meetings.hubspot.com/henry-legard) to get started.
 
-<!-- <img src="resources/verisoul.gif" width="128"/> -->
+## System Requirements
 
-## Getting Started
+- Android 7.0 (API level 24) or higher
+- Kotlin 1.5 or higher
+- Gradle 7.0 or higher
 
-### 1. Add Repository
+## Installation
+
+### Add Maven Repository
 
 Add these lines to your `settings.gradle` file.
 
@@ -30,7 +33,7 @@ dependencyResolutionManagement {
 }
 ```
 
-### 2. Add Dependency
+### Add Dependency
 
 Add these lines to your `build.gradle` file.
 
@@ -39,7 +42,7 @@ Add these lines to your `build.gradle` file.
 ```kotlin
 dependencies {
   ...
-  implementation "ai.verisoul:android:0.3.29"
+  implementation "ai.verisoul:android:0.4.61"
 }
 ```
 
@@ -57,7 +60,7 @@ Add these lines to your `libs.versions.toml` file.
 Under the `[versions]` add:
 
 ```kotlin
-verisoul = "0.3.29"
+verisoul = "0.4.61"
 ```
 
 Under the `[libraries]` add:
@@ -68,13 +71,16 @@ verisoul-android = { group = "ai.verisoul", name = "android", version.ref = "ver
 
 ## Usage
 
-### 1. Initialization
+### Initialize the SDK
 
-Initialization should be called in overridden `onCreate()` function from `Application` class that should be defined in the `AndroidManifest.xml` file. For example:
+Call `init()` in your `Application` class's `onCreate()` method. Make sure to register this Application class in your `AndroidManifest.xml`.
 
-**Application** class
+**Application class:**
 
 ```kotlin
+import ai.verisoul.sdk.Verisoul
+import ai.verisoul.sdk.VerisoulEnvironment
+
 class SampleApplication : Application() {
 
     override fun onCreate() {
@@ -82,14 +88,14 @@ class SampleApplication : Application() {
 
         Verisoul.init(
             this,
-            VerisoulEnvironment.Prod, // or Sandbox
-            "<VERISOUL_PROJECT_ID>"
+            VerisoulEnvironment.Prod, // or VerisoulEnvironment.Sandbox
+            "your-project-id"
         )
     }
 }
 ```
 
-**AndroidManifest.xml**
+**AndroidManifest.xml:**
 
 ```xml
 <manifest>
@@ -100,18 +106,31 @@ class SampleApplication : Application() {
 </manifest>
 ```
 
-When this is called Verisoul library will be initialized, initial data together with **session ID** will be gathered and uploaded to Verisoul backend.
+The `init()` method initializes the Verisoul SDK with your project credentials. This method must be called once when your application starts.
 
-### 2. Get Session ID
+**Parameters:**
 
-Once the minimum amount of data is gathered the session ID becomes available. 
-The session ID is needed in order to request a risk assessment from Verisoul's API. Note that session IDs are short lived and will expire after 24 hours. The application can obtain session ID by providing the callback as shown below:
+- `context`: Your application context
+- `environment`: The environment to use `VerisoulEnvironment.Prod` for production or `VerisoulEnvironment.Sandbox` for testing
+- `projectId`: Your unique Verisoul project identifier
+
+### Get Session ID
+
+The `getSessionId()` method returns the current session identifier after the SDK has collected sufficient device data. This session ID is required to request a risk assessment from Verisoul's API.
+
+**Important Notes:**
+
+- Session IDs are short-lived and expire after 24 hours
+- The session ID becomes available once minimum data collection is complete (typically within seconds)
+- You should send this session ID to your backend, which can then call Verisoul's API to get a risk assessment
+
+**Example:**
 
 ```kotlin
 Verisoul.getSessionId(
     callback = object : VerisoulSessionCallback {
         override fun onSuccess(sessionId: String) {
-            // Upload session ID to backend
+            // Send sessionId to your backend for risk assessment
         }
 
         override fun onFailure(exception: Exception) {
@@ -121,7 +140,30 @@ Verisoul.getSessionId(
 )
 ```
 
-### 3. Provide Touch Events
+### Reinitialize Session
+
+The `reinitialize()` method generates a fresh session ID and resets the SDK's data collection. This is essential for maintaining data integrity when user context changes.
+
+**Example:**
+
+```kotlin
+Verisoul.reinitialize(
+    callback = object : VerisoulCallback {
+        override fun onSuccess() {
+            // SDK reinitialized successfully
+            // Now ready for a new user to log in with a fresh session
+        }
+
+        override fun onFailure(exception: Exception) {
+            // Handle exception
+        }
+    }
+)
+```
+
+After calling this method, you can call `getSessionId()` to retrieve the new session identifier.
+
+### Provide Touch Events
 
 In order to gather touch events and compare them to device accelerometer sensor data, the app will need to provide touch events to Verisoul. The way to achieve this is to create `BaseActivity`, to override `dispatchTouchEvent` function and pass the data to Verisoul like shown below.
 
@@ -146,5 +188,10 @@ class MainActivity : BaseActivity() {
 }
 ```
 
-## Questions and Feedback
-Comprehensive documentation about Verisoul's Android SDK and API can be found at [docs.verisoul.ai](https://docs.verisoul.ai/). Additionally, reach out to Verisoul at [help@verisoul.ai](mailto:help@verisoul.ai) for any questions or feedback.
+## Google Play Data Safety
+
+For information on how to complete the Google Play Data Safety section when using the Verisoul SDK, please refer to our [Data Safety Instructions](https://support.verisoul.ai/articles/2377394661-verisoul-android-sdk-play-store-data-safety-instructions).
+
+## Example
+
+For a complete working example, see the [app folder](https://github.com/verisoul/android-sdk/tree/main/app) in this repository.
