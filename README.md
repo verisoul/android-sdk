@@ -10,12 +10,11 @@
 
 Verisoul provides an Android SDK that allows you to implement fraud prevention in your Android applications. This guide covers the installation, configuration, and usage of the Verisoul Android SDK.
 
-_To run the app a Verisoul Project ID is required._ Schedule a call [here](https://meetings.hubspot.com/henry-legard) to get started.
+_To run the SDK a Verisoul Project ID is required._ Schedule a call [here](https://meetings.hubspot.com/henry-legard) to get started.
 
 ## System Requirements
 
 - Android 7.0 (API level 24) or higher
-- Android Studio Arctic Fox or higher
 - Kotlin 1.5 or higher
 - Gradle 7.0 or higher
 
@@ -43,7 +42,7 @@ Add these lines to your `build.gradle` file.
 ```kotlin
 dependencies {
   ...
-  implementation "ai.verisoul:android:0.3.29"
+  implementation "ai.verisoul:android:0.4.61"
 }
 ```
 
@@ -61,7 +60,7 @@ Add these lines to your `libs.versions.toml` file.
 Under the `[versions]` add:
 
 ```kotlin
-verisoul = "0.3.29"
+verisoul = "0.4.61"
 ```
 
 Under the `[libraries]` add:
@@ -111,9 +110,9 @@ The `init()` method initializes the Verisoul SDK with your project credentials. 
 
 **Parameters:**
 
-- `context` (Context): Your application context
-- `environment` (VerisoulEnvironment): The environment to use - `VerisoulEnvironment.Prod` for production or `VerisoulEnvironment.Sandbox` for testing
-- `projectId` (String): Your unique Verisoul project identifier
+- `context`: Your application context
+- `environment`: The environment to use `VerisoulEnvironment.Prod` for production or `VerisoulEnvironment.Sandbox` for testing
+- `projectId`: Your unique Verisoul project identifier
 
 ### Get Session ID
 
@@ -148,7 +147,6 @@ The `reinitialize()` method generates a fresh session ID and resets the SDK's da
 **Example:**
 
 ```kotlin
-// User logs out
 Verisoul.reinitialize(
     callback = object : VerisoulCallback {
         override fun onSuccess() {
@@ -190,16 +188,10 @@ class MainActivity : BaseActivity() {
 }
 ```
 
-## Example
-
-For a complete working example, see the [app folder](https://github.com/verisoul/android-sdk/tree/main/app) in this repository.
-
 ## Google Play Data Safety
 
 For information on how to complete the Google Play Data Safety section when using the Verisoul SDK, please refer to our [Data Safety Instructions](https://support.verisoul.ai/articles/2377394661-verisoul-android-sdk-play-store-data-safety-instructions).
 
-## Additional Resources
+## Example
 
-- [Verisoul Documentation](https://docs.verisoul.ai/)
-- [Android Developer Documentation](https://developer.android.com/docs)
-- For questions or feedback, reach out at [help@verisoul.ai](mailto:help@verisoul.ai)
+For a complete working example, see the [app folder](https://github.com/verisoul/android-sdk/tree/main/app) in this repository.
