@@ -142,26 +142,28 @@ Verisoul.getSessionId(
 
 ### Reinitialize Session
 
-The `reinitialize()` method generates a fresh session ID and resets the SDK's data collection. This is essential for maintaining data integrity when user context changes.
+The `reinitialize()` method triggers session regeneration in the background and resets the SDK's data collection. This is essential for maintaining data integrity when user context changes.
 
 **Example:**
 
 ```kotlin
-Verisoul.reinitialize(
-    callback = object : VerisoulCallback {
-        override fun onSuccess() {
-            // SDK reinitialized successfully
-            // Now ready for a new user to log in with a fresh session
-        }
+Verisoul.reinitialize()
+```
 
+After calling this method, you can call `getSessionId()` to retrieve the new session identifier:
+
+```kotlin
+Verisoul.getSessionId(
+    callback = object : VerisoulSessionCallback {
+        override fun onSuccess(sessionId: String) {
+            // New session ID is ready
+        }
         override fun onFailure(exception: Exception) {
             // Handle exception
         }
     }
 )
 ```
-
-After calling this method, you can call `getSessionId()` to retrieve the new session identifier.
 
 ### Provide Touch Events
 
