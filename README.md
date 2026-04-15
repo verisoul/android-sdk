@@ -17,6 +17,7 @@ _To run the SDK a Verisoul Project ID is required._ Schedule a call [here](https
 - Android 7.0 (API level 24) or higher
 - Kotlin 1.5 or higher
 - Gradle 7.0 or higher
+- SDK Size: ~410 KB
 
 ## Installation
 
