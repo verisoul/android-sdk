@@ -141,31 +141,6 @@ Verisoul.getSessionId(
 )
 ```
 
-### Reinitialize Session
-
-The `reinitialize()` method triggers session regeneration in the background and resets the SDK's data collection. This is essential for maintaining data integrity when user context changes.
-
-**Example:**
-
-```kotlin
-Verisoul.reinitialize()
-```
-
-After calling this method, you can call `getSessionId()` to retrieve the new session identifier:
-
-```kotlin
-Verisoul.getSessionId(
-    callback = object : VerisoulSessionCallback {
-        override fun onSuccess(sessionId: String) {
-            // New session ID is ready
-        }
-        override fun onFailure(exception: Exception) {
-            // Handle exception
-        }
-    }
-)
-```
-
 ### Provide Touch Events
 
 In order to gather touch events and compare them to device accelerometer sensor data, the app will need to provide touch events to Verisoul. The way to achieve this is to create `BaseActivity`, to override `dispatchTouchEvent` function and pass the data to Verisoul like shown below.
