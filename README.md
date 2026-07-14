@@ -74,7 +74,7 @@ verisoul-android = { group = "ai.verisoul", name = "android", version.ref = "ver
 
 ### Initialize the SDK
 
-Call `init()` in your `Application` class's `onCreate()` method. Make sure to register this Application class in your `AndroidManifest.xml`.
+Call `init()` before you intend to retrieve a Verisoul session_id. The example below initializes in your `Application` class's `onCreate()` method; if you do this, make sure to register the Application class in your `AndroidManifest.xml`.
 
 **Application class:**
 
@@ -107,7 +107,7 @@ class SampleApplication : Application() {
 </manifest>
 ```
 
-The `init()` method initializes the Verisoul SDK with your project credentials. This method must be called once when your application starts.
+The `init()` method initializes the Verisoul SDK with your project credentials. Only initialize the SDK if you plan to retrieve a session_id and call the Verisoul API for that session.
 
 **Parameters:**
 
