@@ -43,7 +43,7 @@ Add these lines to your `build.gradle` file.
 ```kotlin
 dependencies {
   ...
-  implementation "ai.verisoul:android:0.4.70"
+  implementation "ai.verisoul:android:0.4.71"
 }
 ```
 
@@ -61,7 +61,7 @@ Add these lines to your `libs.versions.toml` file.
 Under the `[versions]` add:
 
 ```kotlin
-verisoul = "0.4.70"
+verisoul = "0.4.71"
 ```
 
 Under the `[libraries]` add:
