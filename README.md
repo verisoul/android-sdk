@@ -153,7 +153,7 @@ Verisoul.getSessionId(
             // Send sessionId to your backend for risk assessment
         }
 
-        override fun onFailure(exception: Exception) {
+        override fun onFailure(exception: Throwable) {
             // Handle exception
         }
     }

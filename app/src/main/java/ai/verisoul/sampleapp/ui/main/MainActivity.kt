@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
                 callBack(sessionId)
             }
 
-            override fun onFailure(exception: Exception) {
+            override fun onFailure(exception: Throwable) {
                 Log.e(
                     tag,
                     "Error occurred while trying to fetch sessionId with message: ${exception.message}"
